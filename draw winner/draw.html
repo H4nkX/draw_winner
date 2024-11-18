@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2024家庭日抽奖活动</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            background-image: url('background.jpg'); /* 添加烟花背景图片 */
+            background-size: cover; /* 背景图片覆盖整个页面 */
+            background-repeat: no-repeat; /* 不重复背景图片 */
+            text-align: center;
+            margin-top: 50px;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: white; /* 将标题字体颜色设置为白色 */
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+    font-size: 100px;
+    margin-top: 20px;
+    color: #ffffff;
+    text-align: center; /* 添加这一行，使特等奖居中显示 */
+    column-count: 3; /* 保持列数不变 */
+}
+#Tresult {
+    
+            font-size: 160px;
+            margin-top: 20px;
+            color: #ffffff;
+            text-align: center;
+        
+}
+
+#winnerList, #luckyWinnerList, #luckyWinnerListR2, #luckyWinnerListR3, #luckyWinnerListR4, #luckyWinnerListR5, #thirdPrizeWinnerListR2, #thirdPrizeWinnerList, #secondPrizeWinnerList, #firstPrizeWinnerList {
+    display: none;
+}       
+        
+    </style>
+    <script>
+        var participants = ["名字字典,minngzizidian"];
+        var winners = [];
+        var luckyWinners = [];
+        var luckyWinnersR2 = [];
+        var luckyWinnersR3 = [];
+        var luckyWinnersR4 = [];
+        var luckyWinnersR5 = [];
+        var firstPrizeWinners = [];
+        var secondPrizeWinners = [];
+        var thirdPrizeWinners = [];
+        var thirdPrizeWinnersR2 = [];
+        var excludedWinners = new Set();
+        
+        // 抽取唯一获奖者，确保不会重复获奖
+        function selectUniqueWinner(participants) {
+            var winner;
+            do {
+                winner = participants[Math.floor(Math.random() * participants.length)];
+            } while (excludedWinners.has(winner));
+            excludedWinners.add(winner); // 添加获奖者到排除集合
+            return winner;
+        }
+
+
+        // 更新获奖者列表和排除集合
+        function updateWinnerListAndSet(winners, listId) {
+            var winnerListHTML = winners.map(function(winner) {
+                return '<div>' + winner + '</div>';
+            }).join('');
+            document.getElementById(listId).innerHTML = winnerListHTML;
+        }
+
+// 抽取特等奖
+function draw() {
+    document.getElementById('Tresult').style.display = 'block'; // 立即显示Tresult
+    document.getElementById('result').style.display = 'none'; // 隐藏result
+    var current = 0;
+    var intervalId = setInterval(function() {
+        document.getElementById('Tresult').textContent = participants[current];
+        current = (current + 1) % participants.length;
+    }, 50);
+
+    setTimeout(function() {
+        clearInterval(intervalId);
+        var winner = selectUniqueWinner(participants);
+        winners.push(winner);
+        updateWinnerListAndSet(winners, 'winnerList');
+        document.getElementById('Tresult').textContent = '恭喜 ' + winner + ' 获特等奖！';
+        document.getElementById('specialPrizeButton').style.display = 'none';
+    }, 3000);
+}
+
+// 抽取幸运奖
+function drawLuckyPrize() {
+    
+    for (var i = 0; i < 10; i++) {
+        var winner = selectUniqueWinner(participants);
+        luckyWinners.push(winner);
+        excludedWinners.add(winner); // 添加获奖者到排除集合
+    }
+    updateWinnerListAndSet(luckyWinners, 'luckyWinnerList');
+    document.getElementById('result').textContent = '幸运奖：' + luckyWinners.join(' ');
+    document.getElementById('luckyPrizeButton').style.display = 'none';
+    
+}
+
+// 抽取幸运奖R2
+function drawLuckyPrizeR2() {
+    for (var i = 0; i < 10; i++) {
+        var winner = selectUniqueWinner(participants);
+        luckyWinnersR2.push(winner);
+        excludedWinners.add(winner); // 添加获奖者到排除集合
+    }
+    updateWinnerListAndSet(luckyWinnersR2, 'luckyWinnerListR2');
+    document.getElementById('result').textContent = '幸运奖：' + luckyWinnersR2.join(' ');
+    document.getElementById('luckyPrizeR2Button').style.display = 'none';
+}
+
+// 抽取幸运奖R3
+function drawLuckyPrizeR3() {
+    for (var i = 0; i < 10; i++) {
+        var winner = selectUniqueWinner(participants);
+        luckyWinnersR3.push(winner);
+        excludedWinners.add(winner); // 添加获奖者到排除集合
+    }
+    updateWinnerListAndSet(luckyWinnersR3, 'luckyWinnerListR3');
+    document.getElementById('result').textContent = '幸运奖：' + luckyWinnersR3.join(' ');
+    document.getElementById('luckyPrizeR3Button').style.display = 'none';
+}
+
+// 抽取幸运奖R4
+function drawLuckyPrizeR4() {
+    for (var i = 0; i < 10; i++) {
+        var winner = selectUniqueWinner(participants);
+        luckyWinnersR4.push(winner);
+        excludedWinners.add(winner); // 添加获奖者到排除集合
+    }
+    updateWinnerListAndSet(luckyWinnersR4, 'luckyWinnerListR4');
+    document.getElementById('result').textContent = '幸运奖：' + luckyWinnersR4.join(' ');
+    document.getElementById('luckyPrizeR4Button').style.display = 'none';
+}
+
+// 抽取幸运奖R5
+function drawLuckyPrizeR5() {
+    for (var i = 0; i < 10; i++) {
+        var winner = selectUniqueWinner(participants);
+        luckyWinnersR5.push(winner);
+        excludedWinners.add(winner); // 添加获奖者到排除集合
+    }
+    updateWinnerListAndSet(luckyWinnersR5, 'luckyWinnerListR5');
+    document.getElementById('result').textContent = '幸运奖：' + luckyWinnersR5.join(' ');
+    document.getElementById('luckyPrizeR5Button').style.display = 'none';
+}
+
+// 抽取一等奖
+function drawFirstPrize() {
+    for (var i = 0; i < 3; i++) {
+        var winner = selectUniqueWinner(participants);
+        firstPrizeWinners.push(winner);
+        excludedWinners.add(winner); // 添加获奖者到排除集合
+    }
+    updateWinnerListAndSet(firstPrizeWinners, 'firstPrizeWinnerList');
+    document.getElementById('result').textContent = '一等奖：' + firstPrizeWinners.join(' ');
+    document.getElementById('firstPrizeButton').style.display = 'none';
+}
+    // 抽取二等奖
+    function drawSecondPrize() {
+        for (var i = 0; i < 15; i++) {
+            var winner = selectUniqueWinner(participants);
+            secondPrizeWinners.push(winner);
+            excludedWinners.add(winner); // 添加获奖者到排除集合
+        }
+        updateWinnerListAndSet(secondPrizeWinners, 'secondPrizeWinnerList');
+        document.getElementById('result').textContent = '二等奖：' + secondPrizeWinners.join(' ');
+        document.getElementById('secondPrizeButton').style.display = 'none';
+    }
+
+    // 抽取三等奖
+    function drawThirdPrize() {
+        for (var i = 0; i < 15; i++) {
+            var winner = selectUniqueWinner(participants);
+            thirdPrizeWinners.push(winner);
+            excludedWinners.add(winner); // 添加获奖者到排除集合
+        }
+        updateWinnerListAndSet(thirdPrizeWinners, 'thirdPrizeWinnerList');
+        document.getElementById('result').textContent = '三等奖：' + thirdPrizeWinners.join(' ');
+        document.getElementById('thirdPrizeButton').style.display = 'none';
+    }
+
+    // 抽取三等奖R2
+    function drawThirdPrizeR2() {
+        for (var i = 0; i < 15; i++) {
+            var winner = selectUniqueWinner(participants);
+            thirdPrizeWinnersR2.push(winner);
+            excludedWinners.add(winner); // 添加获奖者到排除集合
+        }
+        updateWinnerListAndSet(thirdPrizeWinnersR2, 'thirdPrizeWinnerListR2');
+        document.getElementById('result').textContent = '三等奖：' + thirdPrizeWinnersR2.join(' ');
+        document.getElementById('thirdPrizeR2Button').style.display = 'none';
+    }
+        // 获取获奖者名单
+        function downloadWinnerList() {
+            // 获取所有奖项的获奖者名单
+            var winnerLists = [
+                document.getElementById('winnerList').innerHTML,
+                document.getElementById('luckyWinnerList').innerHTML,
+                document.getElementById('luckyWinnerListR2').innerHTML,
+                document.getElementById('luckyWinnerListR3').innerHTML,
+                document.getElementById('luckyWinnerListR4').innerHTML,
+                document.getElementById('luckyWinnerListR5').innerHTML,
+                document.getElementById('thirdPrizeWinnerListR2').innerHTML,
+                document.getElementById('thirdPrizeWinnerList').innerHTML,
+                document.getElementById('secondPrizeWinnerList').innerHTML,
+                document.getElementById('firstPrizeWinnerList').innerHTML
+            ];
+
+            // 将所有名单合并为一个字符串
+            var winnerListStr = winnerLists.join('\n');
+
+            // 创建一个隐藏的<a>标签，用于下载
+            var downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(winnerListStr);
+            downloadLink.download = 'winner_list.txt';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+</script>
+</head>
+<body>
+    <h1>2024家庭日抽奖活动</h1>
+    
+    <!-- 抽奖按钮 -->
+<!-- 抽奖按钮 -->
+<button id="luckyPrizeButton" onclick="drawLuckyPrize()">抽取幸运奖第一轮</button>    
+<button id="luckyPrizeR2Button" onclick="drawLuckyPrizeR2()">抽取幸运奖第二轮</button>    
+<button id="luckyPrizeR3Button" onclick="drawLuckyPrizeR3()">抽取幸运奖第三轮</button>    
+<button id="luckyPrizeR4Button" onclick="drawLuckyPrizeR4()">抽取幸运奖第四轮</button>    
+<button id="luckyPrizeR5Button" onclick="drawLuckyPrizeR5()">抽取幸运奖第五轮</button>
+<button id="thirdPrizeButton" onclick="drawThirdPrize()">抽取三等奖第一轮</button>    
+<button id="thirdPrizeR2Button" onclick="drawThirdPrizeR2()">抽取三等奖第二轮</button>
+<button id="secondPrizeButton" onclick="drawSecondPrize()">抽取二等奖</button>
+<button id="firstPrizeButton" onclick="drawFirstPrize()">抽取一等奖</button>
+<button id="specialPrizeButton" onclick="draw()">抽取特等奖</button>
+<button onclick="downloadWinnerList()">下载获奖者名单</button>
+
+    
+    <!-- 显示抽奖结果 -->
+    <div id="result"></div>
+    <div id="Tresult"></div>
+    
+    <!-- 显示各奖项获奖者名单 -->
+    <div id="winnerList"></div>
+    <div id="luckyWinnerList"></div>
+    <div id="luckyWinnerListR2"></div>
+    <div id="luckyWinnerListR3"></div>
+    <div id="luckyWinnerListR4"></div>
+    <div id="luckyWinnerListR5"></div>
+    <div id="thirdPrizeWinnerListR2"></div>
+    <div id="thirdPrizeWinnerList"></div>
+    <div id="secondPrizeWinnerList"></div>
+    <div id="firstPrizeWinnerList"></div>
+    
+</body>
+</html>
+
+
